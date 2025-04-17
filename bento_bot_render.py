@@ -59,6 +59,7 @@ def format_message(summary):
         f"🕒 檢查時間：`{now}`\n"
         f"📝 摘要：{summary}\n\n"
         f"[👉 前往社團查看貼文]({GROUP_URL})"
+    )
 
 if __name__ == "__main__":
     check_facebook_group()
