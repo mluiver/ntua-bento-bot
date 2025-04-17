@@ -1,3 +1,13 @@
+import subprocess
+import sys
+
+# 自動安裝 requests
+try:
+    import requests
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
+    import requests
+
 import requests
 import time
 
