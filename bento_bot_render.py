@@ -36,15 +36,34 @@ def check_facebook_group():
     page = response.text
 
     if any(keyword in page for keyword in KEYWORDS):
-        send_telegram("發現便當貼文！快去搶🍱")
+        send_telegram("這是測試內容（以後會改成自動抓的）")
         print("✅ 發現便當關鍵字，已發送通知")
     else:
         print("❌ 沒有便當關鍵字")
 
+
 def send_telegram(message):
     url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage'
-    data = {'chat_id': TELEGRAM_CHAT_ID, 'text': message}
+    data = {
+        'chat_id': TELEGRAM_CHAT_ID,
+        'text': message,
+        'parse_mode': 'Markdown'  # 支援格式美化
+    }
     requests.post(url, data=data)
+
+def format_message(summary):
+    now = datetime.datetime.now().strftime("%Y/%m/%d %H:%M")
+    return (
+        f"🍱 *便當警報！*\n\n"
+        f"在 Facebook 社團中發現貼文包含便當相關字詞！\n\n"
+        f"🕒 檢查時間：`{now}`\n"
+        f"📝 摘要：{summary}\n\n"
+        f"[👉 前往社團查看貼文]({GROUP_URL})"
 
 if __name__ == "__main__":
     check_facebook_group()
+
+if __name__ == "__main__":
+    summary = "這是一則測試通知。今天有*免費便當*可以吃！"
+    message = format_message(summary)
+    send_telegram(message)
