@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import datetime
 
 # 自動安裝 requests
 try:
