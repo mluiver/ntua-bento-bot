@@ -1,6 +1,21 @@
+import datetime
+
+# 台灣時間 = UTC+8
+now = datetime.datetime.utcnow() + datetime.timedelta(hours=8)
+current_hour = now.hour
+current_minute = now.minute
+
+# 只允許在每天 10:30 - 23:30 之間執行（台灣時間）
+start_minutes = 10 * 60 + 30   # 10:30
+end_minutes = 23 * 60 + 30     # 23:30
+now_minutes = current_hour * 60 + current_minute
+
+if now_minutes < start_minutes or now_minutes > end_minutes:
+    print(f"⏰ 跳過：現在是 {now.strftime('%H:%M')}（台灣時間），不在執行時段內。")
+    exit(0)
+
 import subprocess
 import sys
-import datetime
 
 # 自動安裝 requests
 try:
