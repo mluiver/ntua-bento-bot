@@ -3,5 +3,5 @@ services:
     name: bento-bot-job
     schedule: "*/15 * * * *"  # every 15 minutes
     runtime: python
-    buildCommand: ""
+    buildCommand: "pip install -r requirements.txt"
     startCommand: "python bento_bot_render.py"
