@@ -15,7 +15,7 @@ except ImportError:
 TELEGRAM_TOKEN = '7677457994:AAFoQL_-Cvj9Rve_JWIVMQOZgl1BOO3VWis'
 TELEGRAM_CHAT_ID = '6131239576'
 GROUP_URL = "https://www.facebook.com/groups/236323096475589?locale=zh_TW"
-KEYWORDS = ["便當", "餐盒", "午餐", "免費", "剩下的"]
+KEYWORDS = ["便當", "餐盒", "午餐", "免費", "剩下的", "學生證"]
 
 # ====== Facebook Cookie ======
 COOKIES = {
