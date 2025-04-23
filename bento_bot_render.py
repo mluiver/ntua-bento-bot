@@ -20,7 +20,7 @@ KEYWORDS = ["便當", "餐盒", "午餐", "免費", "剩下的"]
 # ====== Facebook Cookie ======
 COOKIES = {
     "c_user": "100001475421788",
-    "xs": "2%3AKuJlZ4HTiA6AKQ%3A2%3A1740847129%3A-1%3A11324%3A%3AAcWrhXXgfwpX5UdyQC6807XIicBPUGuheFARS5zcLA1L"
+    "xs": "48%3Aj43gs3SpIltD-w%3A2%3A1745205597%3A-1%3A11324%3A%3AAcUwzsL8K5q4Ru4LFKdoV6QrcZKrqGbALbXe5CHqlA"
 }
 HEADERS = {
     'User-Agent': 'Mozilla/5.0',
