@@ -70,7 +70,7 @@ def extract_summary(html):
         if any(kw in text for kw in KEYWORDS):
             return text
     return "（無法擷取貼文內容，但偵測到關鍵字）"
-def get_recent_post_urls(html, limit=5):
+def get_recent_post_urls(html, limit=20):
     soup = BeautifulSoup(html, 'html.parser')
     links = soup.find_all('a', href=True)
     post_urls = []
@@ -116,6 +116,7 @@ def check_facebook_group():
     else:
         print("⚠️ 無法找到 <title>，可能頁面載入失敗。")
 
+    # === 檢查是否登入頁 ===
     if is_login_page(page):
         fail_count = load_fail_count() + 1
         save_fail_count(fail_count)
@@ -137,28 +138,33 @@ def check_facebook_group():
     else:
         save_fail_count(0)
 
-        # ✅ 額外印出整體頁面關鍵字偵測
+        # ✅ 額外印出整體頁面關鍵字偵測（只顯示，不發通知）
         if any(kw in page for kw in KEYWORDS):
             print("🧐 本頁面中發現關鍵字（但尚未進入單篇貼文分析）")
         else:
             print("📭 本頁面中沒有發現任何關鍵字")
 
-        # 讀取已通知過的貼文
+        # ✅ 讀取已通知過的貼文清單
         try:
             with open("notified_urls.txt", "r") as f:
                 notified_urls = set(line.strip() for line in f.readlines())
         except:
             notified_urls = set()
 
-        # 抓最新幾篇貼文網址
-        recent_urls = get_recent_post_urls(page)
+        # ✅ 抓取最新貼文網址（擴增為 10 篇）
+        recent_urls = get_recent_post_urls(page, limit=10)
 
-        # 逐篇檢查
         for post_url in recent_urls:
             if post_url in notified_urls:
                 continue
 
-            summary = extract_summary(page)
+            try:
+                post_page = requests.get(post_url, cookies=COOKIES, headers=HEADERS).text
+                summary = extract_summary(post_page)
+            except Exception as e:
+                print("❌ 抓取貼文失敗：", post_url, "錯誤：", e)
+                continue
+
             if any(kw in summary for kw in KEYWORDS):
                 msg = format_message(summary, post_url)
                 send_telegram(msg)
